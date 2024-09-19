@@ -11,7 +11,7 @@ function setup() {
         points.push({
             pos: createVector(width / 2, height / 2),
             dir: random(TWO_PI),
-            size: random(0.5, 5),
+            size: 0,
             color: {
                 h: random(10, 13), //yellow
                 s: random(60, 100),
