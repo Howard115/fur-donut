@@ -1,4 +1,5 @@
 const TOTAL = 100;
+const RATE = 0.6; // Control rate
 let points = [];
 
 function setup() {
@@ -26,23 +27,22 @@ function draw() {
     for (var i = 0; i < TOTAL; i++) {
         var point = points[i];
 
-        point.dir += noise(point.pos.x, point.pos.y, time) - 0.477;
+        point.dir += (noise(point.pos.x, point.pos.y, time) - 0.477) * RATE; // Controlled by RATE
 
         var mouseAngle = atan2(mouseY - point.pos.y, mouseX - point.pos.x);
-        point.dir += (mouseAngle - point.dir) * 0.05;
+        point.dir += (mouseAngle - point.dir) * 0.05 * RATE; // Controlled by RATE
 
         point.size *= 0.95;
         if (point.size < 2) {
-            point.size = random(2, 5);
+            point.size = random(2, 5) * RATE; // Controlled by RATE
             let angle = random(TWO_PI);
-            let distance = random(50, 100);
+            let distance = random(50, 100) * RATE; // Controlled by RATE
             point.pos.x = mouseX + cos(angle) * distance;
             point.pos.y = mouseY + sin(angle) * distance;
         }
 
-        point.pos.x += cos(point.dir) / (point.size + 2.5) * 10;
-        point.pos.y += sin(point.dir) / (point.size + 2.5) * 10;
-
+        point.pos.x += cos(point.dir) / (point.size + 2.5) * 10 * RATE; // Controlled by RATE
+        point.pos.y += sin(point.dir) / (point.size + 2.5) * 10 * RATE; // Controlled by RATE
 
         var bri = (noise(point.pos.x / 30, point.pos.y / 30, time * 2 + i * 0.005) - 0.3) * (140 - point.size * 20);
         fill(point.color.h, point.color.s, point.color.l + bri);
